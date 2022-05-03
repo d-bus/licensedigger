@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>testdata/AFL-2.1_OR_GPL-2.0-or-later/test.c</file>
         <file>testdata/Apache-2.0/FileUtils.java</file>
         <file>testdata/BSD-2-Clause/imagefilter.cpp</file>
         <file>testdata/BSD-2-Clause/kemailsettings.cpp</file>

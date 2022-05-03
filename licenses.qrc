@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <file>licenses_templates/AFL-2.1_OR_GPL-2.0-or-later/dbus</file>
+        <file>licenses_templates/AFL-2.1_OR_GPL-2.0-or-later/dbus2</file>
         <file>licenses_templates/Apache-2.0/FileUtils</file>
         <file>licenses_templates/BSD-2-Clause/karchive_unzipper_main</file>
         <file>licenses_templates/BSD-2-Clause/kconfig_kemailsettings</file>
@@ -361,5 +363,16 @@
         <file>licenses_templates/LGPL-3.0-only_OR_LicenseRef-KDE-Accepted-LGPL/plasma-workspace_contextualhelpbutton</file>
         <file>licenses_templates/LGPL-2.0-or-later/marble</file>
         <file>licenses_templates/X11/okular_synctex_parser_utils</file>
+        <file>licenses_templates/AFL-2.1_OR_GPL-2.0-or-later/dbus1</file>
+        <file>licenses_templates/MIT/dbus</file>
+        <file>licensetexts/AFL-2.1.txt</file>
+        <file>licenses_templates/AFL-2.1_OR_GPL-2.0-or-later/dbus3</file>
+        <file>licenses_templates/AFL-2.1_OR_GPL-2.0-or-later/dbus4</file>
+        <file>licenses_templates/AFL-2.1_OR_GPL-2.0-or-later/dbus6</file>
+        <file>licenses_templates/AFL-2.1_OR_GPL-2.0-or-later/dbus5</file>
+        <file>licensetexts/TCL.txt</file>
+        <file>licenses_templates/TCL/dbus</file>
+        <file>licenses_templates/BSD-3-Clause/dbus</file>
+        <file>licenses_templates/BSD-3-Clause/dbus2</file>
     </qresource>
 </RCC>

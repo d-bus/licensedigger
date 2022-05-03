@@ -41,6 +41,7 @@ private Q_SLOTS:
     void detectLGPL21withQtLGPLexception_or_QtCommercial();
     void detectLGPL21withQtLGPLexceptionOrLGPL30withQtLGPLexception();
     void detectLGPL30_or_GPL20_or_GPL30_or_GPLKFQF_or_QtCommercial();
+    void detectAFL21OrGPL20orlater();
 
     // detection logic tests
     void detectSpdxExpressions();

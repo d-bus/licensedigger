@@ -212,6 +212,12 @@ void TestHeaderDetection::detectLGPL30_or_GPL20_or_GPL30_or_GPLKFQF_or_QtCommerc
     detectForIdentifierSkipParser("LGPL-3.0-only_OR_GPL-2.0-only_OR_GPL-3.0-only_OR_LicenseRef-KFQF-Accepted-GPL_OR_LicenseRef-Qt-Commercial");
 }
 
+void TestHeaderDetection::detectAFL21OrGPL20orlater()
+{
+    detectForIdentifierRegExpParser("AFL-2.1_OR_GPL-2.0-or-later");
+    detectForIdentifierSkipParser("AFL-2.1_OR_GPL-2.0-or-later");
+}
+
 void TestHeaderDetection::detectSpdxExpressions()
 {
     // read comparison headers
