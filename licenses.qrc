@@ -386,5 +386,6 @@
         <file>licenses_templates/FSFULLR/m4</file>
         <file>licenses_templates/LicenseRef-pkgm4/m4</file>
         <file>licenses_templates/LicenseRef-pycrypto-orig/dbus</file>
+        <file>licenses_templates/TCL/dbus1</file>
     </qresource>
 </RCC>
