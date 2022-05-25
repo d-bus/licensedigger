@@ -374,5 +374,17 @@
         <file>licenses_templates/TCL/dbus</file>
         <file>licenses_templates/BSD-3-Clause/dbus</file>
         <file>licenses_templates/BSD-3-Clause/dbus2</file>
+        <file>licensetexts/AFL-2.0.txt</file>
+        <file>licensetexts/FSFAP.txt</file>
+        <file>licensetexts/FSFULLR.txt</file>
+        <file>licensetexts/LicenseRef-pkgm4.txt</file>
+        <file>licensetexts/LicenseRef-pycrypto-orig.txt</file>
+        <file>licensetexts/LicenseRef-GAP.txt</file>
+        <file>licenses_templates/LicenseRef-GAP/dbus</file>
+        <file>licenses_templates/AFL-2.0/dbus</file>
+        <file>licenses_templates/FSFAP/m4</file>
+        <file>licenses_templates/FSFULLR/m4</file>
+        <file>licenses_templates/LicenseRef-pkgm4/m4</file>
+        <file>licenses_templates/LicenseRef-pycrypto-orig/dbus</file>
     </qresource>
 </RCC>
