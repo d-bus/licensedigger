@@ -387,5 +387,6 @@
         <file>licenses_templates/LicenseRef-pkgm4/m4</file>
         <file>licenses_templates/LicenseRef-pycrypto-orig/dbus</file>
         <file>licenses_templates/TCL/dbus1</file>
+        <file>licenses_templates/AFL-2.0_OR_GPL-2.0-or-later/dbus</file>
     </qresource>
 </RCC>
