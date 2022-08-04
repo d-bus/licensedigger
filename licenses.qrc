@@ -388,5 +388,7 @@
         <file>licenses_templates/LicenseRef-pycrypto-orig/dbus</file>
         <file>licenses_templates/TCL/dbus1</file>
         <file>licenses_templates/AFL-2.0_OR_GPL-2.0-or-later/dbus</file>
+        <file>licenses_templates/LGPL-2.1-or-later/dbus</file>
+        <file>licenses_templates/GPL-2.0-only/kdewin-installer</file>
     </qresource>
 </RCC>
