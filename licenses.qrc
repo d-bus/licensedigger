@@ -395,5 +395,6 @@
         <file>licenses_templates/LGPL-2.0-or-later/gausz</file>
         <file>licenses_templates/LGPL-2.0-or-later/java</file>
         <file>licenses_templates/LGPL-2.1-only_WITH_LicenseRef-Qt-LGPL-exception-1.0_OR_GPL-3.0-only_OR_LicenseRef-Qt-Commercial/qtplugins</file>
+        <file>licenses_templates/MIT/proj</file>
     </qresource>
 </RCC>
