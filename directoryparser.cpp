@@ -87,7 +87,8 @@ QString DirectoryParser::unifyCopyrightCommentHeader(const QString &originalText
         qWarning() << "\tFile not starting with a comment.";
         return originalText;
     }
-    auto lines = originalText.split("\n");
+    bool winEOL = originalText.contains("\r");
+    auto lines = originalText.split(QRegularExpression("\r?\n"));
     for (int i = 0; i < lines.size(); ++i) {
         lines[i].replace(QRegularExpression("/(\\*)+"), "/*"); // initial comment line
         if (lines[i].startsWith("/*")) {
@@ -101,7 +102,7 @@ QString DirectoryParser::unifyCopyrightCommentHeader(const QString &originalText
         lines[i].replace(QRegularExpression("^[ \\*]+(?!(\\\\))"), "    "); // in-between line
         lines[i].replace(QRegularExpression("[ \\*]+$"), ""); // in-between line
     }
-    QString text = lines.join("\n");
+    QString text = lines.join(winEOL ? "\r\n" : "\n");
     //qDebug() << text;
     return text;
 }
@@ -135,7 +136,7 @@ LicenseRegistry::SpdxExpression DirectoryParser::detectSpdxLicenseStatement(cons
     if (match.hasMatch()) {
         // TODO this very simple solution only works for SPDX expressions in our database
         // should be made more general
-        return match.captured("expression").replace(' ', '_');
+        return match.captured("expression").replace(' ', '_').replace("\r", "");
     }
     return QString();
 }
