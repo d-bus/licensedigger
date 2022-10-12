@@ -12,11 +12,13 @@
 
 // for performance reasons, we need to have to lists
 // but they must be kept in sync
-const QRegularExpression SkipParser::sSkipCharDetection("[ |\\\n|\\\t|/|\\-|\\*|#]");
+const QRegularExpression SkipParser::sSkipCharDetection("[ |\\\r|\\\n|\\\t|/|\\-|\\*|#]");
 constexpr bool isSkipChar(const QChar &character)
 {
     switch (character.toLatin1()) {
     case ' ':
+        return true;
+    case '\r':
         return true;
     case '\n':
         return true;

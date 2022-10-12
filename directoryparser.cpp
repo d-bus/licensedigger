@@ -87,7 +87,7 @@ QString DirectoryParser::unifyCopyrightCommentHeader(const QString &originalText
         qWarning() << "\tFile not starting with a comment.";
         return originalText;
     }
-    bool winEOL = originalText.contains("\r");
+    bool winEOL = originalText.contains('\r');
     auto lines = originalText.split(QRegularExpression("\r?\n"));
     for (int i = 0; i < lines.size(); ++i) {
         lines[i].replace(QRegularExpression("/(\\*)+"), "/*"); // initial comment line
@@ -114,6 +114,8 @@ QString DirectoryParser::replaceHeaderText(const QString &fileContent, const QSt
     outputExpression.replace('_', ' ');
     QString spdxOutputString = "SPDX-License-Identifier: " + outputExpression;
     QString newContent = fileContent;
+    bool winEOL = fileContent.contains('\r');
+    newContent.replace("\r\n", "\n");
 
     // replace by longest match
     QRegularExpression bestMatchingExpr = regexps.first();
@@ -126,17 +128,21 @@ QString DirectoryParser::replaceHeaderText(const QString &fileContent, const QSt
         }
     }
     newContent.replace(bestMatchingExpr, spdxOutputString);
+    if (winEOL)
+        newContent.replace("\n", "\r\n");
     return newContent;
 }
 
 LicenseRegistry::SpdxExpression DirectoryParser::detectSpdxLicenseStatement(const QString &fileContent) const
 {
     QRegularExpression regExp = spdxStatementRegExp();
-    auto match = regExp.match(fileContent);
+    QString content = fileContent;
+    content.replace("\r\n", "\n");
+    auto match = regExp.match(content);
     if (match.hasMatch()) {
         // TODO this very simple solution only works for SPDX expressions in our database
         // should be made more general
-        return match.captured("expression").replace(' ', '_').replace("\r", "");
+        return match.captured("expression").replace(' ', '_');
     }
     return QString();
 }
@@ -219,10 +225,12 @@ QVector<LicenseRegistry::SpdxExpression> DirectoryParser::detectLicensesRegexpPa
 {
     QVector<LicenseRegistry::SpdxExpression> testExpressions = m_registry.expressions();
     QVector<LicenseRegistry::SpdxExpression> detectedLicenses;
+    QString content = fileContent;
+    content.replace("\r\n", "\n");
     for (auto expression : testExpressions) {
         auto regexps = m_registry.headerTextRegExps(expression);
         for (auto regexp : regexps) {
-            if (fileContent.contains(regexp)) {
+            if (content.contains(regexp)) {
                 detectedLicenses << expression;
             }
         }
@@ -288,13 +296,14 @@ QMap<QString, LicenseRegistry::SpdxExpression> DirectoryParser::parseAll(const Q
         const QString fileContent = file.readAll();
         file.close();
 
-        //        qDebug() << "checking:" << iterator.fileInfo();
+        //qDebug() << "checking:" << iterator.fileInfo();
         QVector<LicenseRegistry::SpdxExpression> licenses = detectLicenses(fileContent);
         licenses = pruneLicenseList(licenses);
 
+        //qDebug() << licenses;
         if (licenses.count() == 1) {
             results.insert(iterator.fileInfo().filePath(), licenses.first());
-            //            qDebug() << "---> " << iterator.fileInfo().filePath() << identifier;
+            //qDebug() << "---> " << iterator.fileInfo().filePath() << licenses.first();
         } else if (licenses.count() > 1) {
             qCritical() << "UNHANDLED MULTI-LICENSE CASE" << iterator.fileInfo().filePath() << "-->" << licenses;
             results[iterator.fileInfo().filePath()] = LicenseRegistry::AmbigiousLicense;
