@@ -11,7 +11,7 @@
 #include <QTextStream>
 #include <QVector>
 
-const QStringList DirectoryParser::s_supportedExtensions = {".cpp",  ".cc", ".c", ".h",  ".css",  ".hpp", ".qml", ".cmake", "CMakeLists.txt", ".in",  ".py", ".frag", ".vert",
+const QStringList DirectoryParser::s_supportedExtensions = {".cpp",  ".cc", ".c", ".d", ".h",  ".css",  ".hpp", ".qml", ".cmake", "CMakeLists.txt", ".in",  ".py", ".frag", ".vert",
                                                             ".glsl", "php", "sh", ".mm", ".java", ".kt",  ".js",  ".xml",   ".xsd", ".xsl", ".pl", ".rb",   ".docbook", ".m4"};
 
 bool shallIgnoreFile(const QDirIterator &iterator, const QRegularExpression &fileToIgnorePattern)
