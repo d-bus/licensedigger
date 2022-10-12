@@ -390,5 +390,6 @@
         <file>licenses_templates/AFL-2.0_OR_GPL-2.0-or-later/dbus</file>
         <file>licenses_templates/LGPL-2.1-or-later/dbus</file>
         <file>licenses_templates/GPL-2.0-only/kdewin-installer</file>
+        <file>licenses_templates/LicenseRef-Qt-Commercial_OR_LGPL-3.0-only_OR_GPL-2.0-only_OR_GPL-3.0-only/qt</file>
     </qresource>
 </RCC>
