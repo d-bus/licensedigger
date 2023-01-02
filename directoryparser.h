@@ -18,12 +18,13 @@ public:
         NONE = 0x0,
         LICENSE_INFO = 0x1,
         COPYRIGHT_TEXT = 0x2,
-        PRETTY = 0x4
+        PRETTY = 0x4,
+        KEEP_BOILER_TEMPLATE = 0x8
     };
     Q_DECLARE_FLAGS(ConvertOptions, ConvertOption)
 
     void setLicenseHeaderParser(LicenseParser parser);
-    QMap<QString, LicenseRegistry::SpdxExpression> parseAll(const QString &directory, bool convertMode = false, const QString &ignorePattern = QString()) const;
+    QMap<QString, LicenseRegistry::SpdxExpression> parseAll(const QString &directory, bool convertMode = false, const QString &ignorePattern = QString(), ConvertOptions options = ConvertOption::LICENSE_INFO) const;
     void convertCopyright(const QString &directory, ConvertOptions = ConvertOption::COPYRIGHT_TEXT, const QString &ignorePattern = QString()) const;
     QRegularExpression copyrightRegExp() const;
     QRegularExpression spdxStatementRegExp() const;
@@ -34,9 +35,10 @@ public:
      * @brief Uses regexp for the SPDX expression and replace matching text
      * @param fileContent The input content
      * @param spdxExpression The SPDX expression that shall be detected
+     * @param replaceBoilerTemplate also replace the boiler template
      * @return Converted file content with correct SPDX statement
      */
-    QString replaceHeaderText(const QString &fileContent, const QString &spdxExpression) const;
+    QString replaceHeaderText(const QString &fileContent, const QString &spdxExpression, bool replaceBoilerTemplate = true) const;
 
     /**
      * @brief Detect licenses by computing all matches

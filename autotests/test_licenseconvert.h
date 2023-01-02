@@ -37,5 +37,7 @@ private Q_SLOTS:
      * Conformance test with original and target file format
      */
     void exampleFileConversion();
+
+    void exampleFileConversionWithoutBoilerTemplate();
 };
 #endif

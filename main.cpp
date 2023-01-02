@@ -56,6 +56,11 @@ int main(int argc, char *argv[])
                                            "");
     parser.addOption(ignorePatternOption);
 
+    QCommandLineOption keepBoilerTemplateOption(QStringList() << "k"
+                                                          << "keepboilertemplate",
+                                            "keep boiler templates");
+    parser.addOption(keepBoilerTemplateOption);
+
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
@@ -118,9 +123,13 @@ int main(int argc, char *argv[])
         options |= DirectoryParser::ConvertOption::PRETTY;
     }
 
+    if (parser.isSet(keepBoilerTemplateOption)) {
+        options |= DirectoryParser::ConvertOption::KEEP_BOILER_TEMPLATE;
+    }
+
     if (convertLicense) {
         std::cout << hightlightOut << "Convert license statements: starting..." << defaultOut << std::endl;
-        licenseParser.parseAll(directory, true, ignorePattern);
+        licenseParser.parseAll(directory, true, ignorePattern, options);
         std::cout << hightlightOut << "Convert license statements: DONE." << defaultOut << std::endl;
     }
 

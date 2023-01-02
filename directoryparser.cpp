@@ -107,7 +107,18 @@ QString DirectoryParser::unifyCopyrightCommentHeader(const QString &originalText
     return text;
 }
 
-QString DirectoryParser::replaceHeaderText(const QString &fileContent, const QString &spdxExpression) const
+QString rstripSpace(const QString& str)
+{
+    int n = str.size() - 1;
+    for (; n >= 0; --n) {
+        if (!str.at(n).isSpace() || str.at(n) == "\n") {
+          return str.left(n + 1);
+        }
+    }
+    return "";
+}
+
+QString DirectoryParser::replaceHeaderText(const QString &fileContent, const QString &spdxExpression, bool replaceBoilerTemplate) const
 {
     auto regexps = m_registry.headerTextRegExps(spdxExpression);
     QString outputExpression = spdxExpression;
@@ -121,13 +132,22 @@ QString DirectoryParser::replaceHeaderText(const QString &fileContent, const QSt
     QRegularExpression bestMatchingExpr = regexps.first();
     int bestCapturedLength = 0;
     for (auto regexp : regexps) {
+    int bestCapturedStart = 0;
         QRegularExpressionMatch match;
         if (newContent.contains(regexp, &match) && match.capturedLength() > bestCapturedLength) {
             bestMatchingExpr = regexp;
             bestCapturedLength = match.capturedLength();
+            bestCapturedStart = match.capturedStart();
         }
     }
-    newContent.replace(bestMatchingExpr, spdxOutputString);
+    if (replaceBoilerTemplate) {
+        newContent.replace(bestMatchingExpr, spdxOutputString);
+    } else {
+        int lastNL = newContent.lastIndexOf("\n", bestCapturedStart);
+        QString padding = newContent.mid(lastNL, bestCapturedStart - lastNL);
+        QString leftPadding = rstripSpace(padding);
+        newContent.insert(bestCapturedStart, spdxOutputString + leftPadding + padding);
+    }
     if (winEOL)
         newContent.replace("\n", "\r\n");
     return newContent;
@@ -242,7 +262,7 @@ QVector<LicenseRegistry::SpdxExpression> DirectoryParser::detectLicensesRegexpPa
     return detectedLicenses;
 }
 
-QMap<QString, LicenseRegistry::SpdxExpression> DirectoryParser::parseAll(const QString &directory, bool convertMode, const QString &ignorePattern) const
+QMap<QString, LicenseRegistry::SpdxExpression> DirectoryParser::parseAll(const QString &directory, bool convertMode, const QString &ignorePattern, DirectoryParser::ConvertOptions options) const
 {
     QVector<LicenseRegistry::SpdxExpression> expressions = m_registry.expressions();
     QMap<QString, LicenseRegistry::SpdxExpression> results;
@@ -327,8 +347,8 @@ QMap<QString, LicenseRegistry::SpdxExpression> DirectoryParser::parseAll(const Q
         }
 
         const QString expression = results.value(iterator.fileInfo().filePath());
-        if (convertMode && !m_registry.isFakeLicenseMarker(expression)) {
-            QString newContent = replaceHeaderText(fileContent, expression);
+        if (options && !m_registry.isFakeLicenseMarker(expression)) {
+            QString newContent = replaceHeaderText(fileContent, expression, !(options & ConvertOption::KEEP_BOILER_TEMPLATE));
             // qDebug() << newContent;
             file.open(QIODevice::WriteOnly);
             file.write(newContent.toUtf8());
